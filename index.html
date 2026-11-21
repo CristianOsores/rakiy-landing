@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rakiy – Gastos compartidos sin conflictos</title>
+<meta name="description" content="Rakiy registra gastos, calcula cuánto debe cada persona y facilita los pagos entre quienes conviven.">
+<link rel="icon" href="favicon/favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+<meta name="theme-color" content="#275D6B">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="top">
+ <div class="wrap bar">
+  <a class="logo" href="#inicio">Rakiy</a>
+  <button id="menuBtn" class="icon-btn menu" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">☰</button>
+  <nav id="nav" aria-label="Principal">
+   <a href="#inicio">Inicio</a><a href="#como">Cómo funciona</a><a href="#saldos">Saldos</a><a href="#gasto">Registrar gasto</a><a href="#contacto">Contacto</a>
+   <a class="btn amber" href="#grupo">Empezar gratis</a>
+  </nav>
+ </div>
+</header>
+<a class="btn amber fab" href="#gasto">+ Registrar gasto</a>
+
+<main id="main">
+<section id="inicio" class="hero"><div class="wrap">
+ <h1>Divide los gastos de tu casa sin discusiones</h1>
+ <p class="lead">Rakiy registra lo que gastan, calcula cuánto debe cada quien y te dice cómo saldar cuentas con Yape o Plin. Todo en un solo lugar, sin Excel.</p>
+ <a class="btn amber big" href="#grupo">Empezar gratis</a>
+</div></section>
+
+<section id="como" class="wrap"><h2>Cómo funciona</h2>
+ <ol class="steps">
+  <li><span class="num">1</span><h3>Crea tu grupo</h3><p>Ponle nombre a tu hogar e invita a quienes conviven contigo.</p></li>
+  <li><span class="num">2</span><h3>Registra los gastos</h3><p>Anota monto y descripción; Rakiy lo divide por ti.</p></li>
+  <li><span class="num">3</span><h3>Salda cuentas</h3><p>Ve cuánto debes, cuánto te deben y paga con pocas transferencias.</p></li>
+ </ol>
+</section>
+
+<section id="grupo" class="wrap"><h2>Grupo de convivencia</h2>
+ <div class="grid2">
+  <form id="groupForm" class="card" novalidate>
+   <h3>Crear grupo</h3>
+   <label for="gName">Nombre del grupo</label>
+   <input id="gName" autocomplete="off" aria-describedby="gNameE"><p class="err" id="gNameE" role="alert"></p>
+   <fieldset><legend>¿Con quién convives?</legend>
+    <label class="opt"><input type="radio" name="gType" value="roommates" checked> Roommates</label>
+    <label class="opt"><input type="radio" name="gType" value="pareja"> Pareja</label>
+    <label class="opt"><input type="radio" name="gType" value="familia"> Familia</label>
+   </fieldset>
+   <p id="tone" class="note" aria-live="polite"></p>
+   <button class="btn">Crear grupo</button>
+  </form>
+  <div class="card">
+   <h3 id="gTitle">Integrantes</h3>
+   <ul id="members" class="list"></ul>
+   <form id="inviteForm" novalidate>
+    <label for="iMail">Invitar por correo</label>
+    <div class="row"><input id="iMail" type="email" placeholder="amigo@correo.com" aria-describedby="iMailE"><button class="btn">Invitar</button></div>
+    <p class="err" id="iMailE" role="alert"></p>
+   </form>
+   <button id="copyLink" class="btn ghost" type="button">Copiar enlace de invitación</button>
+  </div>
+ </div>
+</section>
+
+<section id="saldos" class="wrap"><h2>Saldos y liquidación</h2>
+ <div class="grid3">
+  <div class="card stat"><span>Tú debes</span><strong id="bOwe">S/ 0.00</strong></div>
+  <div class="card stat"><span>Te deben</span><strong id="bOwed">S/ 0.00</strong></div>
+  <div class="card stat"><span>Balance neto</span><strong id="bNet">S/ 0.00</strong></div>
+ </div>
+ <div class="grid2">
+  <div class="card"><h3>Saldo con cada integrante</h3><ul id="pairs" class="list"></ul></div>
+  <div class="card"><h3>Liquidación sugerida</h3><p class="note">Menor cantidad de transferencias para dejar todo en cero.</p><ul id="settle" class="list"></ul></div>
+ </div>
+</section>
+
+<section id="gasto" class="wrap"><h2>Registrar gasto</h2>
+ <form id="expForm" class="card" novalidate>
+  <p id="editMsg" class="note" hidden></p>
+  <div class="grid2">
+   <div><label for="eAmt">Monto (S/)</label><input id="eAmt" type="number" inputmode="decimal" min="0" step="0.01" aria-describedby="eAmtE"><p class="err" id="eAmtE" role="alert"></p></div>
+   <div><label for="eDesc">Descripción</label><input id="eDesc" autocomplete="off" aria-describedby="eDescE"><p class="err" id="eDescE" role="alert"></p></div>
+   <div><label for="eCat">Categoría</label><select id="eCat"><option>Renta</option><option>Servicios</option><option selected>Víveres</option><option>Internet</option><option>Otros</option></select></div>
+   <div><label for="ePay">¿Quién pagó?</label><select id="ePay"></select></div>
+  </div>
+  <fieldset><legend>¿Cómo se divide?</legend>
+   <label class="opt"><input type="radio" name="mode" value="equal" checked> Partes iguales</label>
+   <label class="opt"><input type="radio" name="mode" value="custom"> Montos personalizados</label>
+   <label class="opt"><input type="radio" name="mode" value="pct"> Porcentajes</label>
+  </fieldset>
+  <fieldset><legend>Participantes (desmarca a quien no participó)</legend><div id="parts"></div></fieldset>
+  <div class="preview" aria-live="polite"><h3>Monto por persona</h3><ul id="preview" class="list"></ul><p class="err" id="splitE" role="alert"></p></div>
+  <button class="btn amber" id="saveExp">Guardar gasto</button> <button class="btn ghost" id="cancelEdit" type="button" hidden>Cancelar edición</button>
+ </form>
+</section>
+
+<section id="historial" class="wrap"><h2>Historial compartido</h2>
+ <div class="card"><ul id="hist" class="list"></ul></div>
+</section>
+
+<section id="contacto" class="wrap"><h2>¿Quieres saber más?</h2>
+ <form id="contactForm" class="card narrow" novalidate>
+  <label for="cName">Nombre completo</label><input id="cName" autocomplete="name" aria-describedby="cNameE"><p class="err" id="cNameE" role="alert"></p>
+  <label for="cMail">Correo electrónico</label><input id="cMail" type="email" autocomplete="email" aria-describedby="cMailE"><p class="err" id="cMailE" role="alert"></p>
+  <label for="cMsg">Mensaje</label><textarea id="cMsg" rows="4" aria-describedby="cMsgE"></textarea><p class="err" id="cMsgE" role="alert"></p>
+  <button class="btn">Enviar</button>
+ </form>
+</section>
+</main>
+<footer><div class="wrap">© 2026 Rakiy · Gastos compartidos para quienes conviven en el Perú</div></footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="dlg"><div id="dlgBody"></div><form method="dialog"><button class="btn ghost">Cerrar</button></form></dialog>
+<script src="js/main.js"></script>
+</body>
+</html>
